@@ -7,7 +7,7 @@ const {
     updateAccount,
     newFriend,
     deleteFriend
-} = require('../../controllers/userthought');
+} = require('../../controllers/userAccount');
 
 // Route to get all accounts and also to get new acocunt for the api
 router.route('/users')

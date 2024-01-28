@@ -1,11 +1,11 @@
 const { Users } = require('../models');
 
-const userThoughts = {
+const userAccount = {
 
     getAllAccounts: async (req, res) => {
         try {
-            const alllAccounts = await Users.findAll();
-            res.json(alllAccounts);
+            const allAccounts = await Users.findAll();
+            res.json(allAccounts);
             res.status(200)
         } catch (err) {
             res.status(500).json({ err: "Can't find accounts!!"});
@@ -71,4 +71,4 @@ const userThoughts = {
     }
 };
 
-module.exports = userThoughts;
+module.exports = userAccount;
