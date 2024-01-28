@@ -1,5 +1,4 @@
-const { Thoughts } = require('../models/thoughts');
-const {User} = require('../models/user')
+const {Thoughts, User} = require('../models')
 const userThoughts = {
 
     getAllThoughts: async (req, res) => {
@@ -25,20 +24,29 @@ const userThoughts = {
     newThoughts: async (req, res) => {
         try {
             const newAccountThoughts = await Thoughts.create(req.body);
-            await User.findByIdAndUpdate(req.body.userId, {$addToSet: {thought}})
+            await User.findByIdAndUpdate(req.body.userId, { $addToSet: { thoughts: newAccountThoughts._id } });
             res.status(200).json(newAccountThoughts);
         } catch (err) {
             res.status(500).json({ err: "Can't create new Thoughts!!" });
         }
     },
+    
+    updateThoughts: async (req, res) => {
+        try {
+            const updateThoughts = await Thoughts.findByIdAndUpdate(req.params.thoughtsId, {$set: req.body}, {new: true})
+            res.status(200).json(updateThoughts)
+        } catch (err) {
+            res.status(500).json({err: "There is a error on updating your thoughts!"});
+        }
+    },
 
     deleteThoughts: async (req, res) => {
         try {
-            const destroyThoughts = await Thoughts.deleteOne(req.params.thoughtsId);
+            const destroyThoughts = await Thoughts.findByIdAndDelete(req.params.thoughtsId);
             await User.findByIdAndUpdate(
-                {thoughts: req.params.thoughtsId},
-                {$pull: {thoughts: req.params.thoughtsId}},
-                {new: true}
+                req.params.userId,
+                { $pull: { thoughts: req.params.thoughtsId } },
+                { new: true }
             );
             res.status(200).json(destroyThoughts);
         } catch (err) {

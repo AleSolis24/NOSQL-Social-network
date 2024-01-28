@@ -5,7 +5,8 @@ const {
     newThoughts,
     deleteThoughts,
     newReaction,
-    deleteReaction
+    deleteReaction,
+    updateThoughts
 } = require('../../controllers/userThoughts');
 
 router.route('/thoughts')
@@ -14,7 +15,8 @@ router.route('/thoughts')
 
 router.route('/thoughts/:thoughtsId')
     .get(getThoughtsById)
-    .delete(deleteThoughts);
+    .delete(deleteThoughts)
+    .put(updateThoughts);
 
 router.route('/thoughts/:thoughtsId/reactions')
     .post(newReaction);
