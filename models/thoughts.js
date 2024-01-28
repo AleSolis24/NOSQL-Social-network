@@ -1,16 +1,16 @@
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 
 const userThoughts = new mongoose.Schema({
     thoughtMessage: {
         type: String,
         required: true,
         minlength: 10,
-        maxlenght: 100
+        maxlength: 100  
     },
 
     createdAt: {
-        type: Data,
-        default: Data.now,
+        type: Date,  
+        default: Date.now,
     },
 
     username: {
@@ -28,9 +28,8 @@ const userThoughts = new mongoose.Schema({
             username: {
                 type: String,
                 required: true
-            },
-
-        },
+            }
+        }
     ],
 });
 
