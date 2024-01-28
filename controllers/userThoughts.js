@@ -1,10 +1,10 @@
-const { Thoughts, User } = require('../models/thoughts');
-
+const { Thoughts } = require('../models/thoughts');
+const {User} = require('../models/user')
 const userThoughts = {
 
     getAllThoughts: async (req, res) => {
         try {
-            const allThoughts = await Thoughts.findAll();
+            const allThoughts = await Thoughts.find();
             res.json(allThoughts);
             res.status(200);
         } catch (err) {
@@ -15,8 +15,8 @@ const userThoughts = {
     getThoughtsById: async (req, res) => {
         try {
             const certainThoughts = await Thoughts.findOne();
-            res.status(certainThoughts);
-            res.status(200);
+            res.json(certainThoughts);
+            res.status(200).send();
         } catch (err) {
             res.status(500).json({ err: "Can't find that CERTAIN thought" });
         }
@@ -34,7 +34,7 @@ const userThoughts = {
 
     deleteThoughts: async (req, res) => {
         try {
-            const destroyThoughts = await Thoughts.destroy(req.params.thoughtsId);
+            const destroyThoughts = await Thoughts.deleteOne(req.params.thoughtsId);
             await User.findByIdAndUpdate(
                 {thoughts: req.params.thoughtsId},
                 {$pull: {thoughts: req.params.thoughtsId}},
@@ -49,9 +49,9 @@ const userThoughts = {
     newReaction: async (req, res) => {
         try {
             const reaction = await Thoughts.findOneAndUpdate(
-                {_id: req.params.thoughtsId},
-                {$addToSet: {reactions: req.body}},
-                {runValidatore: true, new: true}
+                { _id: req.params.thoughtsId },
+                { $addToSet: { reactions: req.body } },
+                { runValidators: true, new: true }
             );
             res.status(200).json(reaction);
         } catch (err) {

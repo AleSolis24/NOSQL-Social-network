@@ -1,15 +1,16 @@
 const { Users } = require('../models/user');
 
 const userAccount = {
-  getAllAccounts: async (req, res) => {
-    try {
-      const allAccounts = await Users.find();
-      res.status(200).json(allAccounts);
-    } catch (err) {
-      res.status(500).json({ error: "Can't find accounts!!" });
-    }
-  },
-
+    getAllAccounts: async (req, res) => {
+        try {
+          const allAccounts = await User.findAll();
+          res.status(200).json(allAccounts);
+        } catch (err) {
+          res.status(500).json({ error: "Can't find accounts!!" });
+          console.log(err);
+        }
+      },
+    
   getAccountById: async (req, res) => {
     try {
       const certainAccounts = await Users.findById(req.params.userId);

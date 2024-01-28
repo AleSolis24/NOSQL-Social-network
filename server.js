@@ -7,9 +7,8 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api', userRoutes);
-app.use('/api',thoughtsRoutes);
-
+app.use('/api', thoughtsRoutes);
 
 app.listen(PORT, () => {
-console.log(`API server running on http://localhost:${PORT}`);
+  console.log(`API server running on http://localhost:${PORT}`);
 });
